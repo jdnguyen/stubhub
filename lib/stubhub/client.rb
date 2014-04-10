@@ -7,7 +7,11 @@ module Stubhub
 
     def self.convert_query_to_url(params, options)
       params.map do |k,v|
-        "%2B+#{k}%3A*%0D%0A"
+        if v == "ticket"
+          "%2B+#{k}%3A*%0D%0A"
+        else
+          "%2B+#{k}%3A#{v}%0D%0A"
+        end
       end.join << self.defaults.merge!(options).map do |k,v|
         "&#{k}=#{v}"
       end.join
